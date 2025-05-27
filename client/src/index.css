@@ -1,0 +1,121 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 210 50% 8%; /* #0B1426 - cyber-blue */
+  --foreground: 0 0% 98%;
+  --muted: 210 40% 15%; /* #152238 - cyber-blue-dark */
+  --muted-foreground: 210 15% 70%; /* #B8C5D6 - cyber-text */
+  --popover: 210 50% 8%;
+  --popover-foreground: 0 0% 98%;
+  --card: 210 40% 15%;
+  --card-foreground: 0 0% 98%;
+  --border: 50 100% 50% / 0.2; /* cyber-yellow with opacity */
+  --input: 210 40% 15%;
+  --primary: 50 100% 50%; /* #FFD700 - cyber-yellow */
+  --primary-foreground: 210 50% 8%;
+  --secondary: 210 40% 15%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 210 40% 15%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 84.2% 60.2%;
+  --destructive-foreground: 60 9.1% 97.8%;
+  --ring: 50 100% 50%;
+  --radius: 0.5rem;
+  
+  /* Custom Fikrado colors */
+  --cyber-blue: 210 50% 8%; /* #0B1426 */
+  --cyber-blue-dark: 210 40% 15%; /* #152238 */
+  --cyber-yellow: 50 100% 50%; /* #FFD700 */
+  --cyber-text: 210 15% 70%; /* #B8C5D6 */
+}
+
+.dark {
+  --background: 210 50% 8%;
+  --foreground: 0 0% 98%;
+  --muted: 210 40% 15%;
+  --muted-foreground: 210 15% 70%;
+  --popover: 210 50% 8%;
+  --popover-foreground: 0 0% 98%;
+  --card: 210 40% 15%;
+  --card-foreground: 0 0% 98%;
+  --border: 50 100% 50% / 0.2;
+  --input: 210 40% 15%;
+  --primary: 50 100% 50%;
+  --primary-foreground: 210 50% 8%;
+  --secondary: 210 40% 15%;
+  --secondary-foreground: 0 0% 98%;
+  --accent: 210 40% 15%;
+  --accent-foreground: 0 0% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 0 0% 98%;
+  --ring: 240 4.9% 83.9%;
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+    font-family: 'Inter', sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
+  }
+}
+
+@layer components {
+  .cyber-glow {
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+  
+  .hover-glow:hover {
+    box-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+    transform: translateY(-2px);
+  }
+  
+  .book-card:hover {
+    transform: scale(1.05);
+  }
+  
+  .whatsapp-btn:hover {
+    background-color: #25D366 !important;
+  }
+
+  .cyber-blue {
+    background-color: hsl(var(--cyber-blue));
+  }
+
+  .cyber-blue-dark {
+    background-color: hsl(var(--cyber-blue-dark));
+  }
+
+  .cyber-yellow {
+    color: hsl(var(--cyber-yellow));
+  }
+
+  .bg-cyber-yellow {
+    background-color: hsl(var(--cyber-yellow));
+  }
+
+  .cyber-text {
+    color: hsl(var(--cyber-text));
+  }
+
+  .border-cyber-yellow {
+    border-color: hsl(var(--cyber-yellow));
+  }
+
+  .text-cyber-blue {
+    color: hsl(var(--cyber-blue));
+  }
+}
