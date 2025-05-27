@@ -20,7 +20,7 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import runtimeErrorOverlay from "@replit/vite-plugin-runtime-error-modal";
 var vite_config_default = defineConfig({
-  base: "/fikrado-security/",
+  base: "/fikrado/",
   plugins: [
     react(),
     runtimeErrorOverlay(),
@@ -152,7 +152,7 @@ app.use((req, res, next) => {
   } else {
     serveStatic(app);
   }
-  const port = 8080;
+  const port = 5e3;
   server.listen({
     port,
     host: "0.0.0.0",
