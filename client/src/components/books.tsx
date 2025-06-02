@@ -5,6 +5,7 @@ import computerBook from "@assets/20250510_114039.png";
 import aiBook from "@assets/20250510_123812.png";
 import linuxBook from "@assets/IMG_7474.png";
 import chatgptBook from "@assets/photo_2025-05-26_15-34-10.jpg";
+import hackingbook from "@assets/hacking.jpg";
 
 export default function Books() {
   const books = [
@@ -32,7 +33,12 @@ export default function Books() {
       image: chatgptBook,
       title: "Isbar ChatGPT Macalin La'aan",
       author: "M Yasin Faratoon"
-    }
+    },
+    {
+      image: hackingbook ,
+      title: "Isbar Hacking Macalin La'aan",
+      author: "Yahye Abdirahman"
+    },
   ];
 
   const handleWhatsAppOrder = () => {
@@ -45,7 +51,7 @@ export default function Books() {
         <div className="text-center mb-16">
           <h2 className="text-4xl lg:text-5xl font-bold cyber-yellow mb-6">Buugaagta Fikrado</h2>
           <p className="text-xl cyber-text max-w-3xl mx-auto">
-            Buugaag qoto dheer oo ku saabsan teknolojiyada casriga ah iyo cybersecurity
+            Buugaag Isbar macalin la'aan waa buugag casri ah oo si maacalin la'aan aad isku bartiid si fudud
           </p>
         </div>
         
