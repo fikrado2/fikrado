@@ -190,5 +190,17 @@
     "likes": 1062,
     "demoLikeCount": true,
     "demoBaseline": 1062
+  },
+  {
+    "id": "browser-test-post",
+    "title": "Browser Test Post",
+    "excerpt": "Added via browser test",
+    "content": "Added via browser test",
+    "imageUrl": "",
+    "publishedAt": "2026-10-11T00:00:00.000Z",
+    "published": false,
+    "likes": 3979,
+    "demoLikeCount": true,
+    "demoBaseline": 3979
   }
 ]
