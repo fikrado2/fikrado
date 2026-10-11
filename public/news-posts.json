@@ -190,5 +190,17 @@
     "likes": 1062,
     "demoLikeCount": true,
     "demoBaseline": 1062
+  },
+  {
+    "id": "somali-books-publishing-collaboration-brings-tec",
+    "title": "Somali Books Publishing Collaboration Brings Technical Titles to Local Readers",
+    "excerpt": "A new publishing collaboration is putting practical Somali-language technology books into local bookshops and schools.",
+    "content": "We are now collaborating with Somali Books on publishing.\n\nThe goal is simple: make practical, modern technology books available in Somali to readers who currently have to learn from English-language material or from material that has not kept up with the tools they actually use.\n\nThe first titles cover ethical hacking, Linux, AI, general computer skills, and programming. Each is written to be teachable rather than merely readable, with exercises a learner can work through alone or in a study group.\n\nCopies will reach bookshops and schools across the region as the rollout progresses.",
+    "imageUrl": "/news/somaliland-students.jpg",
+    "publishedAt": "2026-08-30T10:00:00.000Z",
+    "published": true,
+    "likes": 5982,
+    "demoLikeCount": true,
+    "demoBaseline": 5982
   }
 ]
