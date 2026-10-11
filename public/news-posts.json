@@ -202,17 +202,5 @@
     "likes": 1834,
     "demoLikeCount": true,
     "demoBaseline": 1834
-  },
-  {
-    "id": "test-delete-me",
-    "title": "TEST DELETE ME",
-    "excerpt": "testing admin add",
-    "content": "",
-    "imageUrl": "",
-    "publishedAt": "2026-10-11T06:06:21.845Z",
-    "published": true,
-    "likes": 6032,
-    "demoLikeCount": true,
-    "demoBaseline": 6032
   }
 ]
