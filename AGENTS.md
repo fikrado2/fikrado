@@ -48,3 +48,5 @@ When modifying code, adding new features, or writing content updates:
 2. **Maintain Consistency:** Keep navigation links, footer details (WhatsApp, emails, addresses), and brand assets (`/logo.jpg`) intact across pages.
 3. **Security & Performance:** Write clean, lightweight, optimized code suitable for fast loading and static hosting (GitHub Pages).
 4. **Accuracy:** Refer to Mr. Yahye Abdirahman Dahir and listed corporate partners accurately when generating updates or blog/news posts.
+
+- News posts: admin create/edit/delete commits the full list to public/news-posts.json in the GitHub repo (via the GitHub connector); that file is loaded when local storage is empty. Likes are not committed. Why: admin changes must be saved in the repo without a commit per like.

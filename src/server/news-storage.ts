@@ -14,6 +14,7 @@ import { createHash } from "node:crypto";
 import { useStorage } from "nitro/storage";
 
 import { NEWS_SEED_POSTS } from "./news-seed";
+import { loadPostsFromGitHub, savePostsToGitHub } from "./news-github";
 
 export type NewsPost = {
   id: string;
@@ -145,7 +146,9 @@ export async function listAllPosts(): Promise<NewsPost[]> {
   let posts = await readItem<NewsPost[]>(POSTS_KEY);
 
   if (!Array.isArray(posts) || posts.length === 0) {
-    posts = NEWS_SEED_POSTS.map(normalizePost);
+    const fromRepo = await loadPostsFromGitHub();
+    const repoPosts = fromRepo ? (fromRepo.filter(isPost) as NewsPost[]) : [];
+    posts = (repoPosts.length > 0 ? repoPosts : NEWS_SEED_POSTS).map(normalizePost);
     try {
       await writeItem(POSTS_KEY, posts);
     } catch {
@@ -157,8 +160,10 @@ export async function listAllPosts(): Promise<NewsPost[]> {
   return posts.filter(isPost).map(normalizePost);
 }
 
-async function persist(posts: NewsPost[]): Promise<void> {
+async function persist(posts: NewsPost[], githubMessage?: string): Promise<void> {
   await writeItem(POSTS_KEY, posts);
+  // Admin changes are also committed to the GitHub repo.
+  if (githubMessage) await savePostsToGitHub(posts, githubMessage);
 }
 
 /** Published posts only, newest first. */
@@ -195,14 +200,15 @@ export async function createPost(
     suffix += 1;
   }
 
+  const startLikes = 2000 + Math.floor(Math.random() * 16001);
   const post: NewsPost = normalizePost({
     ...input,
     id,
-    likes: 0,
-    demoLikeCount: false,
-    demoBaseline: 0,
+    likes: startLikes,
+    demoLikeCount: true,
+    demoBaseline: startLikes,
   });
-  await persist([...posts, post]);
+  await persist([...posts, post], `News: add "${post.title}"`);
   return post;
 }
 
@@ -224,7 +230,7 @@ export async function updatePost(
     demoBaseline: existing.demoBaseline,
   });
   posts[index] = next;
-  await persist(posts);
+  await persist(posts, `News: edit "${next.title}"`);
   return next;
 }
 
@@ -232,7 +238,7 @@ export async function deletePost(id: string): Promise<boolean> {
   const posts = await listAllPosts();
   const remaining = posts.filter((p) => p.id !== id);
   if (remaining.length === posts.length) return false;
-  await persist(remaining);
+  await persist(remaining, `News: delete ${id}`);
   try {
     await removeItem(`likes:${id}`);
   } catch {

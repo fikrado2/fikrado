@@ -36,10 +36,25 @@ function NotFoundComponent() {
   );
 }
 
+const STALE_MODULE_RE =
+  /dynamically imported module|Failed to fetch dynamically|Importing a module script failed|error loading dynamically/i;
+
+/** Reload once when a stale module fails to load (e.g. after a server restart). */
+function reloadOnceForStaleModule(message: string): boolean {
+  if (typeof window === "undefined" || !STALE_MODULE_RE.test(message)) return false;
+  const key = "fikrado:stale-reload";
+  const last = Number(sessionStorage.getItem(key) || 0);
+  if (Date.now() - last < 10000) return false;
+  sessionStorage.setItem(key, String(Date.now()));
+  window.location.reload();
+  return true;
+}
+
 function ErrorComponent({ error, reset }: ErrorComponentProps) {
   console.error(error);
   const router = useRouter();
   useEffect(() => {
+    if (reloadOnceForStaleModule(String((error as { message?: string } | undefined)?.message ?? error))) return;
     reportLovableError(error, { boundary: "tanstack_root_error_component" });
   }, [error]);
 
@@ -141,6 +156,21 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+
+  useEffect(() => {
+    const onPreload = (e: Event) => {
+      if (reloadOnceForStaleModule("error loading dynamically imported module")) e.preventDefault();
+    };
+    const onRejection = (e: PromiseRejectionEvent) => {
+      reloadOnceForStaleModule(String(e.reason?.message ?? e.reason ?? ""));
+    };
+    window.addEventListener("vite:preloadError", onPreload);
+    window.addEventListener("unhandledrejection", onRejection);
+    return () => {
+      window.removeEventListener("vite:preloadError", onPreload);
+      window.removeEventListener("unhandledrejection", onRejection);
+    };
+  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>

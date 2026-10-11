@@ -60,6 +60,7 @@ export default function LanguageSwitcher() {
         {isFirstVisit && open && (
           <motion.div
             className="lang-fab-backdrop"
+            onClick={handleClose}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
