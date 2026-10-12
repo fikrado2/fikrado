@@ -32,7 +32,7 @@ cybersecurity services and affordable technology courses, with offices in
 Hargeisa (Somaliland) and Jijiga (Ethiopia).
 
 - **Live site (GitHub Pages):** <https://fikrado2.github.io>
-- **Live site (Netlify):** <https://fikrado.netlify.app> (after setup)
+- **Live site (Netlify):** <https://fikrado1.netlify.app> (configured, currently password-protected)
 - **Repository:** <https://github.com/fikrado2/fikrado2.github.io>
 - **Contact:** fikrado1@gmail.com · +252 63 4048063 · +251 98 4858498
 
