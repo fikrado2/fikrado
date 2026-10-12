@@ -92,6 +92,7 @@ export const translations = {
       books: "Books",
       videos: "Videos",
       news: "News",
+      community: "Community",
       contact: "Contact",
     },
     common: {
@@ -445,6 +446,7 @@ export const translations = {
       books: "Buugaagta",
       videos: "Fiidiyowyada",
       news: "Warka",
+      community: "Bulshada",
       contact: "Nala Xiriir",
     },
     common: {
@@ -787,6 +789,7 @@ export const translations = {
       books: "\u1218\u1325\u1465\u1348\u134d\u1348\u1275",
       videos: "\u1275\u12f5\u12f0\u12ce\u12ce\u1295\u1325\u1295\u1308\u122d",
       news: "\u12dd\u1293",
+      community: "\u121b\u12c5\u12e8\u12f0\u1293 \u122b\u126d\u1205",
       contact: "\u12e8\u12a0\u132d\u1292\u1295",
     },
     common: {

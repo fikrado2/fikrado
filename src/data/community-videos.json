@@ -1,0 +1,12 @@
+[
+  { "id": "JNIudfkfPvk", "title": "Cybersecurity Fundamentals", "description": "Essential concepts for beginners in cybersecurity" },
+  { "id": "Ea7Pu9KCoS4", "title": "Security Awareness Training", "description": "How to protect yourself and your organization" },
+  { "id": "ljWNdEwQe4s", "title": "Linux & Networking Basics", "description": "Foundation skills for cybersecurity professionals" },
+  { "id": "l10Uzd5OJO8", "title": "Ethical Hacking Techniques", "description": "Hands-on techniques for penetration testing" },
+  { "id": "A4v3WBPApfQ", "title": "Web Application Security", "description": "OWASP Top 10 and beyond" },
+  { "id": "pPO6CIlN0Ts", "title": "Phishing & Social Engineering Defense", "description": "Recognize and prevent social engineering attacks" },
+  { "id": "dQw4w9WgXcQ", "title": "Network Security Monitoring", "description": "Detect threats in your network traffic" },
+  { "id": "9bZkp7q19f0", "title": "Incident Response Playbook", "description": "Step-by-step incident handling procedures" },
+  { "id": "kJQP7kiw5Fk", "title": "Mobile Security for Africa", "description": "Protecting mobile money and devices" },
+  { "id": "YQHsXMglC9A", "title": "AI in Cybersecurity", "description": "How AI is transforming threat detection" }
+]
