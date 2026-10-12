@@ -49,4 +49,5 @@ When modifying code, adding new features, or writing content updates:
 3. **Security & Performance:** Write clean, lightweight, optimized code suitable for fast loading and static hosting (GitHub Pages).
 4. **Accuracy:** Refer to Mr. Yahye Abdirahman Dahir and listed corporate partners accurately when generating updates or blog/news posts.
 
-- News posts: admin create/edit/delete commits the full list to public/news-posts.json in the GitHub repo (via the GitHub connector); that file is loaded when local storage is empty. Likes are not committed. Why: admin changes must be saved in the repo without a commit per like.
+- News posts: the site is fully static with no API, no auth, and no server. Posts are edited by hand in `src/data/news-posts.json` and committed; that file is imported at build time and baked into the prerendered HTML. Do not reintroduce a server, admin login, or API route for News.
+- News likes are cosmetic and browser-local (`localStorage` only). Never send them anywhere, and never present the seeded demo counts as real engagement — keep the "Demo like counts" badge while `demoLikeCount` is true.

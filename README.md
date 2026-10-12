@@ -72,8 +72,7 @@ All code in this repository is written and maintained by Yahye Abdirahman.
 | Tests | Vitest 4 |
 | Hosting | GitHub Pages (pre-rendered static site) |
 
-The News API (`/api/news/*`) is available when running the app on a server.
-The GitHub Pages deployment is static and does not include that API.
+The site is fully static: it has no API routes and no server-side storage.
 
 ## Features
 
@@ -84,56 +83,50 @@ The GitHub Pages deployment is static and does not include that API.
 - **Videos** — embedded YouTube tutorial library.
 - **About** — mission, values, team, and offices.
 - **Contact** — contact details plus an **EngageBay CRM** web form (see below).
-- **News** — shown as unavailable on the static GitHub Pages deployment; its server-backed posts and admin functions require a server.
+- **News** — read-only announcements rendered from `src/data/news-posts.json`.
 - **Multilingual** — English, Somali, and Amharic with automatic detection.
 - **Accessibility & SEO** — semantic markup, meta/JSON-LD tags, sitemap, and reduced-motion support.
 
 ## News page
 
-`/news` publishes company announcements and security write-ups. Visitors read
-published posts and like them; only the administrator can create, edit, or
-delete posts.
+`/news` is a normal read-only page. Posts live in `src/data/news-posts.json`,
+which is imported at build time, so the cards are baked into the prerendered
+HTML — no fetch, no API, no server, and no sign-in. There is no admin UI.
 
-GitHub Pages serves this project as static files, so News posts, likes, and
-admin sign-in are unavailable on the deployed site. The app still supports
-these features in local development and on a server deployment.
+### Adding, editing, or removing a post
 
-### Admin sign-in
+Edit `src/data/news-posts.json` and push. The next deploy renders the change.
 
-Authentication is **server-side**. The password is compared against the
-`ADMIN_PASSWORD` environment variable with a timing-safe comparison, and a
-successful login returns an **HttpOnly** session cookie. The password itself
-is never sent to the browser, never bundled into the JavaScript, and never
-written to disk by the app.
+```json
+{
+  "id": "unique-slug",
+  "title": "Post title",
+  "excerpt": "One-line summary shown on the card.",
+  "content": "First paragraph.\n\nSecond paragraph — separate paragraphs with a blank line.",
+  "imageUrl": "/news/cyber.jpg",
+  "publishedAt": "2026-10-12T09:00:00.000Z",
+  "published": true,
+  "likes": 1487,
+  "demoLikeCount": true,
+  "demoBaseline": 1487
+}
+```
 
-- **Username:** `fikrado` (from `ADMIN_USERNAME`)
-- **Password:** the value of `ADMIN_PASSWORD`
-
-Failed logins return a single generic message — "Access rejected by FIKRADO
-Security." — so the response never reveals whether the username or the password
-was wrong. Write endpoints also require a same-origin request.
-
-### Storage
-
-Posts and likes are held server-side, not in this repository:
-
-| Endpoint | Purpose |
+| Field | Purpose |
 | --- | --- |
-| `GET /api/news` | Published posts (public) |
-| `POST /api/news` | Create a post (admin session) |
-| `GET/PATCH/DELETE /api/news/:id` | Read / update / delete one post |
-| `POST /api/news/:id/like` | Record a like |
-| `GET/POST/DELETE /api/news/session` | Check / create / clear the admin session |
+| `id` | Unique, stable slug. Used as the React key. |
+| `publishedAt` | ISO date used for sorting (newest first) and display. |
+| `published` | Set `false` to hide a draft. Anything else publishes. |
+| `imageUrl` | Site-relative path (`/news/…`) or absolute URL. Images live in `public/news/`. |
+| `content` | Plain text. Blank lines separate paragraphs. |
 
-On Cloudflare Workers the data lives in a **KV namespace** (binding `NEWS`,
-declared in `wrangler.json`). Locally there is no KV binding, so nitro falls
-back to in-memory storage and posts reset when the dev server stops.
+Malformed entries are skipped rather than breaking the page.
 
 ### Likes
 
-Likes are real and server-recorded. The server stores a hashed visitor
-identifier per post, so the same visitor cannot inflate a count by clicking
-again — a repeat like returns `incremented: false`.
+Likes are **cosmetic and browser-local**. Clicking the heart stores that post id
+in this visitor's own `localStorage` and nothing is sent anywhere, so a like from
+one visitor is never counted for anyone else and no server sees it.
 
 The seeded posts carry **demo** like counts. Those are flagged with
 `demoLikeCount`/`demoBaseline` and the UI shows a **"Demo like counts"** badge,
@@ -189,9 +182,10 @@ The dev server runs on <http://localhost:8080>.
 | `src/pages/` | Page components rendered by the routes |
 | `src/components/` | Shared UI, including the `ui/` primitives |
 | `src/i18n/` | Language context and translations |
-| `src/lib/news/` | News storage and admin session logic |
+| `src/lib/news/` | News post loading and browser-local likes |
+| `src/data/` | News post data (`news-posts.json`) |
 | `src/styles.css` | Global design system |
-| `public/` | Static assets, including `public/news/` |
+| `public/` | Static assets, including `public/news/` images |
 
 `src/routeTree.gen.ts` is generated by TanStack Router — do not edit it by hand.
 
@@ -200,7 +194,8 @@ The dev server runs on <http://localhost:8080>.
 The site is prerendered to static HTML for GitHub Pages. Every push to `main`
 builds the pages and deploys `.output/public` to
 <https://fikrado2.github.io>. The workflow is defined in
-`.github/workflows/deploy.yml` and requires no Cloudflare credentials.
+`.github/workflows/deploy.yml`. No secrets or third-party credentials are
+required — the only credential is the repository's own Actions token.
 
 To trigger a deployment manually after the changes are committed and pushed:
 
@@ -212,9 +207,9 @@ This requires the GitHub CLI to be authenticated with permission to dispatch
 repository workflows. Alternatively, use **Actions → Deploy to GitHub Pages →
 Run workflow** on GitHub.
 
-The static deployment does not run TanStack Start's server or the News API.
-News posts, likes, and administration remain unavailable until the app is
-deployed to a server-capable host.
+The deployment is static only. TanStack Start's server entry is built but never
+runs, and the app deliberately has no API routes — everything visitors see is
+prerendered HTML plus a small client bundle.
 
 ---
 
