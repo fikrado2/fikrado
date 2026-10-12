@@ -12,7 +12,6 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as BooksRouteImport } from './routes/books'
-import { Route as CommunityRouteImport } from './routes/community'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as NewsRouteImport } from './routes/news'
@@ -32,11 +31,6 @@ const AboutRoute = AboutRouteImport.update({
 const BooksRoute = BooksRouteImport.update({
   id: '/books',
   path: '/books',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CommunityRoute = CommunityRouteImport.update({
-  id: '/community',
-  path: '/community',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContactRoute = ContactRouteImport.update({
@@ -69,7 +63,6 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/books': typeof BooksRoute
-  '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
   '/news': typeof NewsRoute
@@ -80,7 +73,6 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/books': typeof BooksRoute
-  '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
   '/news': typeof NewsRoute
@@ -92,7 +84,6 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/books': typeof BooksRoute
-  '/community': typeof CommunityRoute
   '/contact': typeof ContactRoute
   '/courses': typeof CoursesRoute
   '/news': typeof NewsRoute
@@ -105,7 +96,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/books'
-    | '/community'
     | '/contact'
     | '/courses'
     | '/news'
@@ -116,7 +106,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/books'
-    | '/community'
     | '/contact'
     | '/courses'
     | '/news'
@@ -127,7 +116,6 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/books'
-    | '/community'
     | '/contact'
     | '/courses'
     | '/news'
@@ -139,7 +127,6 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   BooksRoute: typeof BooksRoute
-  CommunityRoute: typeof CommunityRoute
   ContactRoute: typeof ContactRoute
   CoursesRoute: typeof CoursesRoute
   NewsRoute: typeof NewsRoute
@@ -168,13 +155,6 @@ declare module '@tanstack/react-router' {
       path: '/books'
       fullPath: '/books'
       preLoaderRoute: typeof BooksRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/community': {
-      id: '/community'
-      path: '/community'
-      fullPath: '/community'
-      preLoaderRoute: typeof CommunityRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/contact': {
@@ -219,7 +199,6 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   BooksRoute: BooksRoute,
-  CommunityRoute: CommunityRoute,
   ContactRoute: ContactRoute,
   CoursesRoute: CoursesRoute,
   NewsRoute: NewsRoute,

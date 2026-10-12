@@ -16,7 +16,6 @@ export default defineConfig({
       { path: "/about" },
       { path: "/books" },
       { path: "/contact" },
-      { path: "/community" },
       { path: "/courses" },
       { path: "/news" },
       { path: "/services" },
