@@ -1,0 +1,37 @@
+[build]
+  command = "npm run build"
+  publish = ".output/public"
+
+[build.environment]
+  NODE_VERSION = "22"
+  VITE_STATIC_PAGES = "true"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  # SPA fallback for any client-side routes not prerendered
+
+[headers]
+  # Cache static assets aggressively
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+  # HTML pages: short cache, must-revalidate
+  for = "*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+  # Security headers
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=()"
+
+# Netlify Functions (if you later want server-side features like News admin)
+# [functions]
+#   directory = ".output/server"
+#   node_bundler = "esbuild"
