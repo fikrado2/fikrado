@@ -1,43 +1,577 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>FIKRADO Security | Cybersecurity Services & Tech Courses</title>
-    <meta name="description" content="FIKRADO Security — professional cybersecurity services and technology courses across the Horn of Africa. 50% non-profit." />
-    <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://fikrado2.github.io/" />
-    <link rel="icon" type="image/jpeg" href="/logo.jpg" />
-    <meta property="og:title" content="FIKRADO Security | Cybersecurity Services & Tech Courses" />
-    <meta property="og:description" content="Professional cybersecurity services and technology courses across the Horn of Africa. 50% non-profit." />
-    <meta property="og:url" content="https://fikrado2.github.io/" />
-    <meta property="og:image" content="https://fikrado2.github.io/logo.jpg" />
-    <meta name="twitter:card" content="summary_large_image" />
-    <script>
-      (function () {
-        var path = window.location.pathname;
-        var hash = window.location.hash;
-        var search = window.location.search;
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 — FIKRADO Security</title>
+  <meta name="description" content="Page not found — FIKRADO Security">
+  <meta name="robots" content="noindex, follow">
+  <link rel="icon" type="image/jpeg" href="/logo.jpg">
+  <meta property="og:title" content="404 — FIKRADO Security">
+  <meta property="og:description" content="Page not found — FIKRADO Security">
+  <meta property="og:image" content="https://fikrado2.github.io/logo.jpg">
+  <meta name="twitter:card" content="summary_large_image">
 
-        // Already a hash route — keep as-is
-        if (hash && hash.length > 1) return;
+  <!-- Preload logo -->
+  <link rel="preload" as="image" href="/logo.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        // Strip trailing slash (except root)
-        if (path.length > 1 && path.endsWith("/")) path = path.slice(0, -1);
+  <style>
+    :root {
+      --bg: #04060c;
+      --bg-soft: #0a0f1a;
+      --panel: rgba(10, 15, 26, 0.85);
+      --panel-glass: rgba(10, 15, 26, 0.7);
+      --border: rgba(253, 224, 71, 0.18);
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --yellow: #fde047;
+      --yellow-deep: #facc15;
+      --sky: #7dd3fc;
+      --sky-deep: #38bdf8;
+      --text: #e6ecf5;
+      --muted: #93a1b5;
+      --font: "Plus Jakarta Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      --font-display: "Orbitron", "Space Grotesk", "Plus Jakarta Sans", system-ui, sans-serif;
+      --grad: linear-gradient(120deg, #fde047 0%, #facc15 30%, #7dd3fc 100%);
+      --shadow-card: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --shadow-glow: 0 0 60px rgba(253, 224, 71, 0.15);
+    }
 
-        if (path && path !== "/") {
-          window.location.replace("/#" + path + search);
-        } else if (search) {
-          window.location.replace("/#" + "/" + search);
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* 3D Canvas - fixed fullscreen behind content */
+    #scene-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Vignette overlay */
+    .vignette {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 30%, transparent 0%, var(--bg) 70%),
+        radial-gradient(circle at 50% 100%, rgba(253,224,71,0.03) 0%, transparent 60%);
+    }
+
+    /* Main content */
+    .content {
+      position: relative;
+      z-index: 10;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1.5rem;
+      text-align: center;
+    }
+
+    /* Logo */
+    .logo-wrap {
+      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 30px rgba(253, 224, 71, 0.3));
+    }
+
+    .logo-img {
+      width: 120px;
+      height: 120px;
+      object-fit: contain;
+      border-radius: 16px;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      padding: 0.5rem;
+      box-shadow: var(--shadow-card), var(--shadow-glow);
+    }
+
+    /* 404 Code */
+    .code-404 {
+      font-family: var(--font-display);
+      font-size: clamp(6rem, 18vw, 14rem);
+      font-weight: 900;
+      line-height: 1;
+      margin: 0.5rem 0 1rem;
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      filter: drop-shadow(0 0 40px rgba(253, 224, 71, 0.25));
+      animation: pulse-glow 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse-glow {
+      0%, 100% { filter: drop-shadow(0 0 40px rgba(253, 224, 71, 0.25)); }
+      50% { filter: drop-shadow(0 0 80px rgba(253, 224, 71, 0.45)); }
+    }
+
+    /* Message */
+    .message {
+      font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+      color: var(--text);
+      max-width: 42ch;
+      margin: 0 auto 2rem;
+      font-weight: 500;
+    }
+
+    .message .brand {
+      background: var(--grad);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+    }
+
+    .message .sub {
+      display: block;
+      margin-top: 0.5rem;
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    /* Terminal-style detail */
+    .terminal-box {
+      background: var(--terminal-bg, rgba(6, 10, 18, 0.9));
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      margin: 1rem auto 2rem;
+      max-width: 500px;
+      width: 90%;
+      font-family: "JetBrains Mono", "Fira Code", "SF Mono", monospace;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: left;
+      box-shadow: var(--shadow-card);
+      overflow-x: auto;
+    }
+
+    .terminal-box .prompt { color: var(--yellow); margin-right: 0.5rem; }
+    .terminal-box .path { color: var(--sky); }
+    .terminal-box .error { color: var(--red, #f87171); }
+
+    /* Button */
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.9rem 1.8rem;
+      font-family: var(--font);
+      font-size: 1rem;
+      font-weight: 600;
+      color: #0b1220;
+      background: var(--grad);
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 4px 20px rgba(253, 224, 71, 0.3);
+    }
+
+    .btn-home:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(253, 224, 71, 0.45); }
+    .btn-home:active { transform: translateY(0); }
+    .btn-home:focus-visible { outline: 2px solid var(--sky); outline-offset: 3px; }
+
+    .btn-home svg { width: 1.1em; height: 1.1em; flex-shrink: 0; }
+
+    /* Footer hint */
+    .footer-hint {
+      margin-top: 3rem;
+      color: var(--muted);
+      font-size: 0.85rem;
+      opacity: 0.7;
+    }
+
+    /* Reduced motion: disable heavy animations */
+    @media (prefers-reduced-motion: reduce) {
+      .code-404 { animation: none; }
+    }
+
+    /* Mobile adjustments */
+    @media (max-width: 480px) {
+      .code-404 { font-size: 5rem; }
+      .message { font-size: 1rem; }
+      .terminal-box { font-size: 0.75rem; padding: 1rem; }
+      .btn-home { padding: 0.8rem 1.4rem; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Three.js 3D Scene Canvas -->
+  <canvas id="scene-canvas"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <!-- Content -->
+  <main class="content" role="main">
+    <!-- Logo -->
+    <div class="logo-wrap">
+      <img class="logo-img" src="/logo.jpg" alt="FIKRADO Security logo" loading="eager" fetchpriority="high">
+    </div>
+
+    <!-- 404 Code -->
+    <div class="code-404" aria-hidden="true">404</div>
+
+    <!-- Message -->
+    <p class="message">
+      <span class="brand">FIKRADO Security</span> page is not available
+      <span class="sub">The page you're looking for doesn't exist or has been moved.</span>
+    </p>
+
+    <!-- Terminal-style detail -->
+    <div class="terminal-box" aria-label="Error details">
+      <div><span class="prompt">$</span> <span class="path">fikrado@security:~$</span> <span class="error">curl -I https://fikrado2.github.io/this-page-does-not-exist</span></div>
+      <div style="margin-top:0.4rem; color:var(--yellow);">HTTP/2 404</div>
+      <div style="color:var(--muted);">Content-Type: text/html; charset=utf-8</div>
+      <div style="color:var(--muted); margin-top:0.4rem;">The requested resource was not found on this server.</div>
+    </div>
+
+    <!-- Home button -->
+    <a href="/" class="btn-home">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+        <polyline points="9 22 9 12 15 12"></polyline>
+      </svg>
+      Return to Home
+    </a>
+
+    <!-- Footer hint -->
+    <p class="footer-hint">
+      FIKRADO Security · Cybersecurity services & tech education · Hargeisa, Somaliland & Jijiga, Ethiopia
+    </p>
+  </main>
+
+  <!-- Three.js (ESM from CDN) -->
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://esm.run/three@0.186.0"
+    }
+  }
+  </script>
+
+  <script type="module">
+    import * as THREE from 'three';
+
+    // Recreate the HomeScene 3D background without React for the static 404 page
+    const canvas = document.getElementById('scene-canvas');
+    if (!canvas) {
+      console.error('Canvas not found');
+    } else {
+      // Renderer
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 0);
+
+    // Scene
+    const scene = new THREE.Scene();
+
+    // Camera - match HomeScene
+    const camera = new THREE.PerspectiveCamera(40, window.innerWidth / window.innerHeight, 0.1, 100);
+    camera.position.set(0, 0, 7);
+
+    // Mouse parallax
+    const pointer = { x: 0, y: 0 };
+    const target = { x: 0, y: 0 };
+
+    window.addEventListener('pointermove', (e) => {
+      pointer.x = (e.clientX / window.innerWidth) * 2 - 1;
+      pointer.y = -(e.clientY / window.innerHeight) * 2 + 1;
+    }, { passive: true });
+
+    // Helper: safe random that never returns NaN
+    const rand = () => Math.random();
+    const randRange = (min, max) => min + rand() * (max - min);
+    const randChoice = (arr) => arr[Math.floor(rand() * arr.length)];
+
+    // Stars (background) - similar to Stars from drei
+    const starsGeometry = new THREE.BufferGeometry();
+    const starCount = 800;
+    const starPositions = new Float32Array(starCount * 3);
+    const starSizes = new Float32Array(starCount);
+
+    for (let i = 0; i < starCount; i++) {
+      const radius = 40 + rand() * 40;
+      const theta = rand() * Math.PI * 2;
+      const phi = Math.acos(2 * rand() - 1);
+      starPositions[i * 3] = radius * Math.sin(phi) * Math.cos(theta);
+      starPositions[i * 3 + 1] = radius * Math.sin(phi) * Math.sin(theta);
+      starPositions[i * 3 + 2] = radius * Math.cos(phi);
+      starSizes[i] = 0.5 + rand() * 1.5;
+    }
+
+    starsGeometry.setAttribute('position', new THREE.BufferAttribute(starPositions, 3));
+    starsGeometry.setAttribute('size', new THREE.BufferAttribute(starSizes, 1));
+
+    const starsMaterial = new THREE.PointsMaterial({
+      color: 0xffffff,
+      size: 1.5,
+      transparent: true,
+      opacity: 0.4,
+      sizeAttenuation: true,
+      depthWrite: false,
+    });
+
+    const stars = new THREE.Points(starsGeometry, starsMaterial);
+    scene.add(stars);
+
+    // Sparkles (like drei Sparkles)
+    const sparkleCount = 50;
+    const sparkleGeometry = new THREE.BufferGeometry();
+    const sparklePositions = new Float32Array(sparkleCount * 3);
+    const sparkleSizes = new Float32Array(sparkleCount);
+    const sparkleSpeeds = new Float32Array(sparkleCount);
+    const sparklePhases = new Float32Array(sparkleCount);
+    const sparkleScales = [14, 10, 6];
+
+    for (let i = 0; i < sparkleCount; i++) {
+      const scale = randChoice(sparkleScales);
+      sparklePositions[i * 3] = (rand() - 0.5) * scale;
+      sparklePositions[i * 3 + 1] = (rand() - 0.5) * scale;
+      sparklePositions[i * 3 + 2] = (rand() - 0.5) * scale;
+      sparkleSizes[i] = 0.5 + rand() * 1.5;
+      sparkleSpeeds[i] = 0.08 + rand() * 0.08;
+      sparklePhases[i] = rand() * Math.PI * 2;
+    }
+
+    sparkleGeometry.setAttribute('position', new THREE.BufferAttribute(sparklePositions, 3));
+    sparkleGeometry.setAttribute('size', new THREE.BufferAttribute(sparkleSizes, 1));
+    sparkleGeometry.setAttribute('speed', new THREE.BufferAttribute(sparkleSpeeds, 1));
+    sparkleGeometry.setAttribute('phase', new THREE.BufferAttribute(sparklePhases, 1));
+
+    const sparkleMaterial = new THREE.PointsMaterial({
+      color: 0xfde047,
+      size: 2,
+      transparent: true,
+      opacity: 0.3,
+      sizeAttenuation: true,
+      depthWrite: false,
+      blending: THREE.AdditiveBlending,
+    });
+
+    const sparkles = new THREE.Points(sparkleGeometry, sparkleMaterial);
+    scene.add(sparkles);
+
+    // Leo Constellation (simplified)
+    const LEO_STARS = [
+      [0.0, 0.5, 0], [0.35, 0.65, 0], [0.55, 0.55, 0], [0.7, 0.35, 0],
+      [0.9, 0.25, 0], [0.2, 0.8, 0], [0.1, 0.9, 0], [0.4, 0.85, 0], [0.5, 0.75, 0],
+    ];
+    const LEO_EDGES = [[0,1],[1,2],[2,3],[3,4],[0,5],[5,6],[5,7],[7,8],[8,2]];
+
+    const constellationGroup = new THREE.Group();
+    constellationGroup.position.set(0, 0.3, 0);
+
+    // Constellation lines
+    const scaled = LEO_STARS.map(([x, y, z]) => [x * 2.5 - 1.25, y * 2.2 - 0.8, z]);
+
+    LEO_EDGES.forEach(([a, b]) => {
+      const pa = scaled[a], pb = scaled[b];
+      const lineGeom = new THREE.BufferGeometry();
+      lineGeom.setAttribute('position', new THREE.Float32BufferAttribute([
+        pa[0], pa[1], pa[2], pb[0], pb[1], pb[2]
+      ], 3));
+      const lineMat = new THREE.LineBasicMaterial({ color: 0xfde047, transparent: true, opacity: 0.35 });
+      constellationGroup.add(new THREE.Line(lineGeom, lineMat));
+    });
+
+    // Constellation stars
+    const starMeshGeometry = new THREE.SphereGeometry(0.06, 12, 12);
+    const starMeshMaterial = new THREE.MeshBasicMaterial({ color: 0xfde047, transparent: true, opacity: 0.9 });
+
+    const starMeshes = [];
+    scaled.forEach((pos, i) => {
+      const mesh = new THREE.Mesh(starMeshGeometry, starMeshMaterial);
+      mesh.position.set(...pos);
+      mesh.userData = { baseScale: 1, phase: i * 0.7 };
+      constellationGroup.add(mesh);
+      starMeshes.push(mesh);
+    });
+
+    // Central glow
+    const glowGeom = new THREE.SphereGeometry(0.14, 16, 16);
+    const glowMat = new THREE.MeshBasicMaterial({ color: 0xfde047, transparent: true, opacity: 0.25 });
+    const glowMesh = new THREE.Mesh(glowGeom, glowMat);
+    glowMesh.position.set(...scaled[0]);
+    constellationGroup.add(glowMesh);
+
+    scene.add(constellationGroup);
+
+    // Zodiac Rings
+    const rings = [];
+    const ringConfigs = [
+      { radius: 3.5, speed: 0.05, tilt: 0.3, color: 0xfde047, opacity: 0.15 },
+      { radius: 4.2, speed: -0.03, tilt: -0.25, color: 0x7dd3fc, opacity: 0.1 },
+      { radius: 5.0, speed: 0.02, tilt: 0.15, color: 0xfacc15, opacity: 0.08 },
+    ];
+
+    ringConfigs.forEach(cfg => {
+      const ringGeom = new THREE.RingGeometry(cfg.radius, cfg.radius + 0.02, 100);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: cfg.color,
+        transparent: true,
+        opacity: cfg.opacity,
+        side: THREE.DoubleSide,
+        depthWrite: false,
+      });
+      const ring = new THREE.Mesh(ringGeom, ringMat);
+      ring.rotation.set(cfg.tilt, cfg.tilt * 0.4, 0);
+      ring.userData = { speed: cfg.speed };
+      scene.add(ring);
+      rings.push(ring);
+    });
+
+    // Zodiac Dust
+    const dustCount = 60;
+    const dustGeometry = new THREE.BufferGeometry();
+    const dustPositions = new Float32Array(dustCount * 3);
+    const dustSizes = new Float32Array(dustCount);
+
+    for (let i = 0; i < dustCount; i++) {
+      const angle = (i / dustCount) * Math.PI * 2;
+      const r = 3.8 + (rand() - 0.5) * 0.8;
+      dustPositions[i * 3] = r * Math.cos(angle);
+      dustPositions[i * 3 + 1] = (rand() - 0.5) * 0.4;
+      dustPositions[i * 3 + 2] = r * Math.sin(angle);
+      dustSizes[i] = 0.02 + rand() * 0.03;
+    }
+
+    dustGeometry.setAttribute('position', new THREE.BufferAttribute(dustPositions, 3));
+    dustGeometry.setAttribute('size', new THREE.BufferAttribute(dustSizes, 1));
+
+    const dustMaterial = new THREE.PointsMaterial({
+      color: 0xfde047,
+      size: 0.08,
+      transparent: true,
+      opacity: 0.4,
+      sizeAttenuation: true,
+      depthWrite: false,
+    });
+
+    const dust = new THREE.Points(dustGeometry, dustMaterial);
+    scene.add(dust);
+
+    // Ambient light
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+    scene.add(ambientLight);
+
+    // Animation loop
+    let lastTime = 0;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function animate(time) {
+      const dt = (time - lastTime) * 0.001;
+      lastTime = time;
+
+      if (!prefersReducedMotion) {
+        // Mouse parallax smoothing
+        target.x += (pointer.x - target.x) * 0.05;
+        target.y += (pointer.y - target.y) * 0.05;
+
+        camera.position.x = target.x * 2.5;
+        camera.position.y = target.y * 1.5;
+        camera.lookAt(0, 0, 0);
+
+        // Constellation rotation
+        constellationGroup.rotation.z = Math.sin(time * 0.00015) * 0.03;
+
+        // Star pulsing
+        starMeshes.forEach((mesh, i) => {
+          const scale = 1 + Math.sin(time * 0.0015 + i * 0.7) * 0.3;
+          mesh.scale.setScalar(scale);
+        });
+
+        // Glow pulse
+        const glowScale = 1 + Math.sin(time * 0.001) * 0.1;
+        glowMesh.scale.setScalar(glowScale);
+
+        // Rings rotation
+        rings.forEach(ring => {
+          ring.rotation.z += ring.userData.speed * dt * 60;
+        });
+
+        // Dust rotation
+        dust.rotation.y += 0.0003;
+
+        // Sparkles animation
+        const spPositions = sparkleGeometry.attributes.position.array;
+        const spSizes = sparkleGeometry.attributes.size.array;
+        const spSpeeds = sparkleGeometry.attributes.speed.array;
+        const spPhases = sparkleGeometry.attributes.phase.array;
+
+        for (let i = 0; i < sparkleCount; i++) {
+          const t = time * 0.001 * spSpeeds[i] + spPhases[i];
+          const yOffset = Math.sin(t) * 0.0008;
+          // NaN-safe update
+          if (!isNaN(yOffset)) {
+            spPositions[i * 3 + 1] += yOffset;
+          }
+          const newSize = 0.5 + Math.sin(t * 2) * 0.3;
+          if (!isNaN(newSize)) {
+            spSizes[i] = newSize;
+          }
         }
-      })();
-    </script>
-  </head>
-  <body>
-    <noscript>
-      <h1>FIKRADO Security</h1>
-      <p>Cybersecurity services and technology courses across the Horn of Africa.</p>
-      <p><a href="https://fikrado2.github.io/">Visit FIKRADO Security</a></p>
-    </noscript>
-  </body>
+        sparkleGeometry.attributes.position.needsUpdate = true;
+        sparkleGeometry.attributes.size.needsUpdate = true;
+      }
+
+      renderer.render(scene, camera);
+      requestAnimationFrame(animate);
+    }
+
+    requestAnimationFrame(animate);
+
+    // Resize handler
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    // Cleanup on unload
+    window.addEventListener('beforeunload', () => {
+      renderer.dispose();
+      starsGeometry.dispose();
+      starsMaterial.dispose();
+      sparkleGeometry.dispose();
+      sparkleMaterial.dispose();
+      constellationGroup.children.forEach(c => {
+        if (c.geometry) c.geometry.dispose();
+        if (c.material) Array.isArray(c.material) ? c.material.forEach(m => m.dispose()) : c.material.dispose();
+      });
+      rings.forEach(r => { r.geometry.dispose(); r.material.dispose(); });
+      dustGeometry.dispose();
+      dustMaterial.dispose();
+    });
+    } // close else block for canvas check
+  </script>
+</body>
 </html>
