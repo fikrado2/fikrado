@@ -15,7 +15,9 @@
 [![three.js](https://img.shields.io/badge/three.js-r186-000000?style=flat-square&logo=three.js&logoColor=white)](https://threejs.org)
 
 [![Deploy to GitHub Pages](https://github.com/fikrado2/fikrado2.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/fikrado2/fikrado2.github.io/actions/workflows/deploy.yml)
+[![Deploy to Netlify](https://github.com/fikrado2/fikrado2.github.io/actions/workflows/netlify-deploy.yml/badge.svg)](https://github.com/fikrado2/fikrado2.github.io/actions/workflows/netlify-deploy.yml)
 [![Live site](https://img.shields.io/badge/Live-fikrado2.github.io-2EA44F?style=flat-square)](https://fikrado2.github.io)
+[![Netlify](https://img.shields.io/badge/Netlify-Ready-00C7B7?style=flat-square&logo=netlify&logoColor=white)](https://app.netlify.com/start/deploy?repository=https://github.com/fikrado2/fikrado2.github.io)
 [![Last commit](https://img.shields.io/github/last-commit/fikrado2/fikrado2.github.io?style=flat-square)](https://github.com/fikrado2/fikrado2.github.io/commits/main)
 [![Repo size](https://img.shields.io/github/repo-size/fikrado2/fikrado2.github.io?style=flat-square)](https://github.com/fikrado2/fikrado2.github.io)
 
@@ -29,7 +31,8 @@ Website for **FIKRADO Security**, a 50% non-profit company specializing in
 cybersecurity services and affordable technology courses, with offices in
 Hargeisa (Somaliland) and Jijiga (Ethiopia).
 
-- **Live site:** <https://fikrado2.github.io>
+- **Live site (GitHub Pages):** <https://fikrado2.github.io>
+- **Live site (Netlify):** <https://fikrado.netlify.app> (after setup)
 - **Repository:** <https://github.com/fikrado2/fikrado2.github.io>
 - **Contact:** fikrado1@gmail.com · +252 63 4048063 · +251 98 4858498
 
@@ -70,7 +73,7 @@ All code in this repository is written and maintained by Yahye Abdirahman.
 | i18n | Custom `LanguageContext` (English, Somali, Amharic) |
 | Linting | ESLint 9 + Prettier |
 | Tests | Vitest 4 |
-| Hosting | GitHub Pages (pre-rendered static site) |
+| Hosting | GitHub Pages + Netlify (dual, pre-rendered static site) |
 
 The site is fully static: it has no API routes and no server-side storage.
 
@@ -191,8 +194,11 @@ The dev server runs on <http://localhost:8080>.
 
 ## Deployment
 
-The site is prerendered to static HTML for GitHub Pages. Every push to `main`
-builds the pages and deploys `.output/public` to
+The site is prerendered to static HTML and deploys to **both GitHub Pages and Netlify** in parallel.
+
+### GitHub Pages
+
+Every push to `main` builds the pages and deploys `.output/public` to
 <https://fikrado2.github.io>. The workflow is defined in
 `.github/workflows/deploy.yml`. No secrets or third-party credentials are
 required — the only credential is the repository's own Actions token.
@@ -207,9 +213,30 @@ This requires the GitHub CLI to be authenticated with permission to dispatch
 repository workflows. Alternatively, use **Actions → Deploy to GitHub Pages →
 Run workflow** on GitHub.
 
-The deployment is static only. TanStack Start's server entry is built but never
-runs, and the app deliberately has no API routes — everything visitors see is
-prerendered HTML plus a small client bundle.
+### Netlify
+
+A second workflow (`.github/workflows/netlify-deploy.yml`) runs on every push
+to `main` and deploys the same `.output/public` directory to Netlify.
+
+**One-time Netlify setup:**
+1. Go to <https://app.netlify.com/start/deploy?repository=https://github.com/fikrado2/fikrado2.github.io>
+2. Authorize Netlify to access the `fikrado2` GitHub org/repo
+3. Netlify will auto-detect the `netlify.toml` config:
+   - Build command: `npm run build`
+   - Publish directory: `.output/public`
+   - Node version: 22
+   - `VITE_STATIC_PAGES=true` environment variable
+4. Click **Deploy site**
+5. Optionally rename the site (e.g., `fikrado` → `https://fikrado.netlify.app`)
+6. In Netlify site settings, add two **Build environment variables** if not auto-picked:
+   - `NETLIFY_AUTH_TOKEN` (from User Settings → Applications → Personal access tokens)
+   - `NETLIFY_SITE_ID` (from Site settings → General → Site details)
+
+After setup, every push to `main` deploys to both platforms automatically.
+
+Both deployments are static only. TanStack Start's server entry is built but
+never runs, and the app deliberately has no API routes — everything visitors
+see is prerendered HTML plus a small client bundle.
 
 ---
 
