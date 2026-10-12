@@ -2,6 +2,8 @@ import { useEffect } from "react";
 
 const SITE_URL = "https://fikrado2.github.io";
 const SITE_NAME = "FIKRADO Security";
+const OG_IMAGE = "/og-image.png";
+const OG_IMAGE_URL = `${SITE_URL}${OG_IMAGE}`;
 
 const PAGE_META = {
   "/": {
@@ -175,9 +177,15 @@ export default function useSEO(pathname) {
     setOrCreateMeta("property", "og:title", meta.title);
     setOrCreateMeta("property", "og:description", meta.description);
     setOrCreateMeta("property", "og:url", `${SITE_URL}/#${pathname}`);
+    setOrCreateMeta("property", "og:image", OG_IMAGE_URL);
+    setOrCreateMeta("property", "og:image:width", "1733");
+    setOrCreateMeta("property", "og:image:height", "908");
+    setOrCreateMeta("property", "og:image:type", "image/png");
 
     setOrCreateMeta("name", "twitter:title", meta.title);
     setOrCreateMeta("name", "twitter:description", meta.description);
+    setOrCreateMeta("name", "twitter:image", OG_IMAGE_URL);
+    setOrCreateMeta("name", "twitter:card", "summary_large_image");
 
     setOrCreateLink("canonical", `${SITE_URL}/`);
 
