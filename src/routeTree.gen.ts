@@ -17,10 +17,6 @@ import { Route as CoursesRouteImport } from './routes/courses'
 import { Route as NewsRouteImport } from './routes/news'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as VideosRouteImport } from './routes/videos'
-import { Route as ApiNewsRouteImport } from './routes/api.news'
-import { Route as ApiNewsSessionRouteImport } from './routes/api.news.session'
-import { Route as ApiNewsPostIdRouteImport } from './routes/api.news_.$postId'
-import { Route as ApiNewsPostIdLikeRouteImport } from './routes/api.news_.$postId.like'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -62,26 +58,6 @@ const VideosRoute = VideosRouteImport.update({
   path: '/videos',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ApiNewsRoute = ApiNewsRouteImport.update({
-  id: '/api/news',
-  path: '/api/news',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiNewsSessionRoute = ApiNewsSessionRouteImport.update({
-  id: '/session',
-  path: '/session',
-  getParentRoute: () => ApiNewsRoute,
-} as any)
-const ApiNewsPostIdRoute = ApiNewsPostIdRouteImport.update({
-  id: '/api/news_/$postId',
-  path: '/api/news/$postId',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ApiNewsPostIdLikeRoute = ApiNewsPostIdLikeRouteImport.update({
-  id: '/like',
-  path: '/like',
-  getParentRoute: () => ApiNewsPostIdRoute,
-} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -92,10 +68,6 @@ export interface FileRoutesByFullPath {
   '/news': typeof NewsRoute
   '/services': typeof ServicesRoute
   '/videos': typeof VideosRoute
-  '/api/news': typeof ApiNewsRouteWithChildren
-  '/api/news/session': typeof ApiNewsSessionRoute
-  '/api/news/$postId': typeof ApiNewsPostIdRouteWithChildren
-  '/api/news/$postId/like': typeof ApiNewsPostIdLikeRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -106,10 +78,6 @@ export interface FileRoutesByTo {
   '/news': typeof NewsRoute
   '/services': typeof ServicesRoute
   '/videos': typeof VideosRoute
-  '/api/news': typeof ApiNewsRouteWithChildren
-  '/api/news/session': typeof ApiNewsSessionRoute
-  '/api/news/$postId': typeof ApiNewsPostIdRouteWithChildren
-  '/api/news/$postId/like': typeof ApiNewsPostIdLikeRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -121,10 +89,6 @@ export interface FileRoutesById {
   '/news': typeof NewsRoute
   '/services': typeof ServicesRoute
   '/videos': typeof VideosRoute
-  '/api/news': typeof ApiNewsRouteWithChildren
-  '/api/news/session': typeof ApiNewsSessionRoute
-  '/api/news_/$postId': typeof ApiNewsPostIdRouteWithChildren
-  '/api/news_/$postId/like': typeof ApiNewsPostIdLikeRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,10 +101,6 @@ export interface FileRouteTypes {
     | '/news'
     | '/services'
     | '/videos'
-    | '/api/news'
-    | '/api/news/session'
-    | '/api/news/$postId'
-    | '/api/news/$postId/like'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -151,10 +111,6 @@ export interface FileRouteTypes {
     | '/news'
     | '/services'
     | '/videos'
-    | '/api/news'
-    | '/api/news/session'
-    | '/api/news/$postId'
-    | '/api/news/$postId/like'
   id:
     | '__root__'
     | '/'
@@ -165,10 +121,6 @@ export interface FileRouteTypes {
     | '/news'
     | '/services'
     | '/videos'
-    | '/api/news'
-    | '/api/news/session'
-    | '/api/news_/$postId'
-    | '/api/news_/$postId/like'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -180,8 +132,6 @@ export interface RootRouteChildren {
   NewsRoute: typeof NewsRoute
   ServicesRoute: typeof ServicesRoute
   VideosRoute: typeof VideosRoute
-  ApiNewsRoute: typeof ApiNewsRouteWithChildren
-  ApiNewsPostIdRoute: typeof ApiNewsPostIdRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
@@ -242,59 +192,8 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof VideosRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/api/news': {
-      id: '/api/news'
-      path: '/api/news'
-      fullPath: '/api/news'
-      preLoaderRoute: typeof ApiNewsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/news/session': {
-      id: '/api/news/session'
-      path: '/session'
-      fullPath: '/api/news/session'
-      preLoaderRoute: typeof ApiNewsSessionRouteImport
-      parentRoute: typeof ApiNewsRoute
-    }
-    '/api/news_/$postId': {
-      id: '/api/news_/$postId'
-      path: '/api/news/$postId'
-      fullPath: '/api/news/$postId'
-      preLoaderRoute: typeof ApiNewsPostIdRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/api/news_/$postId/like': {
-      id: '/api/news_/$postId/like'
-      path: '/like'
-      fullPath: '/api/news/$postId/like'
-      preLoaderRoute: typeof ApiNewsPostIdLikeRouteImport
-      parentRoute: typeof ApiNewsPostIdRoute
-    }
   }
 }
-
-interface ApiNewsRouteChildren {
-  ApiNewsSessionRoute: typeof ApiNewsSessionRoute
-}
-
-const ApiNewsRouteChildren: ApiNewsRouteChildren = {
-  ApiNewsSessionRoute: ApiNewsSessionRoute,
-}
-
-const ApiNewsRouteWithChildren =
-  ApiNewsRoute._addFileChildren(ApiNewsRouteChildren)
-
-interface ApiNewsPostIdRouteChildren {
-  ApiNewsPostIdLikeRoute: typeof ApiNewsPostIdLikeRoute
-}
-
-const ApiNewsPostIdRouteChildren: ApiNewsPostIdRouteChildren = {
-  ApiNewsPostIdLikeRoute: ApiNewsPostIdLikeRoute,
-}
-
-const ApiNewsPostIdRouteWithChildren = ApiNewsPostIdRoute._addFileChildren(
-  ApiNewsPostIdRouteChildren,
-)
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -305,8 +204,6 @@ const rootRouteChildren: RootRouteChildren = {
   NewsRoute: NewsRoute,
   ServicesRoute: ServicesRoute,
   VideosRoute: VideosRoute,
-  ApiNewsRoute: ApiNewsRouteWithChildren,
-  ApiNewsPostIdRoute: ApiNewsPostIdRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

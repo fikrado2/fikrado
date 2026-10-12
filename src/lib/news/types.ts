@@ -1,8 +1,8 @@
-// Shapes returned by the News API (see src/server/*).
+// Shape of a post in `public/news-posts.json`.
 //
-// Storage and authentication are server-side: the browser never sees the
-// password, and posts/likes live in the server's storage mount rather than in
-// files committed to the repository.
+// News is a static, read-only page on GitHub Pages: there is no API and no
+// authentication. Posts are added and edited by committing this data to the
+// repository, so nothing here is ever written back from the browser.
 
 export type NewsPost = {
   id: string;
@@ -10,12 +10,13 @@ export type NewsPost = {
   /** Short summary shown on the card. */
   excerpt: string;
   content: string;
-  /** Absolute URL or a site-relative path such as "/logo.jpg". */
+  /** Absolute URL or a site-relative path such as "/news/cyber.jpg". */
   imageUrl: string;
   /** ISO date used for sorting and display. */
   publishedAt: string;
+  /** Set to false to keep a post hidden while you draft it. */
   published: boolean;
-  /** Real like count. */
+  /** Total count to display, including any demo baseline. */
   likes: number;
   /**
    * True while `likes` includes seeded demo numbers rather than only genuine
@@ -23,6 +24,6 @@ export type NewsPost = {
    * real engagement.
    */
   demoLikeCount: boolean;
-  /** The demo portion of `likes`, so the UI can show "1,412 (incl. 1,200 demo)". */
+  /** The demo portion of `likes`, so the UI can label how much is not real. */
   demoBaseline: number;
 };
