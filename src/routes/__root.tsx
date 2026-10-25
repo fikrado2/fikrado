@@ -172,6 +172,66 @@ function RootComponent() {
     };
   }, []);
 
+  // 3D Card Tilt Effect - Client-side only
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    const cards = document.querySelectorAll<HTMLElement>(
+      ".glass-card:not(.no-3d):not(.hp-cta):not(.cta-band):not(.books-partnership-card):not(.hp-ceo-card):not(.contact-form)"
+    );
+    
+    if (cards.length === 0) return;
+
+    const handleMouseMove = (e: MouseEvent) => {
+      cards.forEach((card) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+        const rotateX = ((y - centerY) / centerY) * 3; // max 3deg
+        const rotateY = ((centerX - x) / centerX) * 3; // max 3deg
+
+        card.style.transform = `
+          perspective(1000px)
+          rotateX(${rotateX}deg)
+          rotateY(${rotateY}deg)
+          translateY(-8px)
+          scale(1.015)
+        `;
+      });
+    };
+
+    const handleMouseLeave = () => {
+      cards.forEach((card) => {
+        card.style.transform = "";
+        card.style.transition = "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)";
+      });
+    };
+
+    const handleMouseEnter = (e: MouseEvent) => {
+      const card = e.currentTarget as HTMLElement;
+      card.style.transition = "transform 0.1s cubic-bezier(0.16, 1, 0.3, 1)";
+    };
+
+    cards.forEach((card) => {
+      card.addEventListener("mousemove", handleMouseMove);
+      card.addEventListener("mouseleave", handleMouseLeave);
+      card.addEventListener("mouseenter", handleMouseEnter);
+    });
+
+    return () => {
+      cards.forEach((card) => {
+        card.removeEventListener("mousemove", handleMouseMove);
+        card.removeEventListener("mouseleave", handleMouseLeave);
+        card.removeEventListener("mouseenter", handleMouseEnter);
+      });
+    };
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
